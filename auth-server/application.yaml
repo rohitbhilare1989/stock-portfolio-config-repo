@@ -1,0 +1,42 @@
+spring: 
+  sql:
+    init:
+      mode: always
+  jpa:
+    hibernate:
+      ddl-auto: update 
+    show-sql: true
+  datasource:
+    url: jdbc:mysql://localhost:3306/auth_db
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  security:
+    oauth2:
+      authorizationserver:
+        client:
+          stock-portfolio-client:
+            registration:
+              client-id: "stock-portfolio-client"
+              client-secret: "{noop}secret"
+              client-authentication-methods:
+                - "client_secret_basic"
+              authorization-grant-types:
+                - "authorization_code"
+                - "refresh_token"
+              redirect-uris:
+                - "http://127.0.0.1:9000/*"                
+              scopes:
+                - "openid"
+                - "profile"
+                - "read"
+                - "write"
+            require-authorization-consent: false      
+
+logging:
+  level:
+    org:
+      springframework:
+        security: TRACE
+        web: INFO
